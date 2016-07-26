@@ -1,0 +1,49 @@
+Ethenet-Ethenet Direct Connection
+=================================
+
+- First configure your desktop client to any  IP address except 192.168.1.150 as this address is assigned to your connected VIBE by default. ( we are using 192.168.1.151 for our PC client)
+
+
+- Connect VIBE to the PC client via ethernet port.
+
+- Setup ppp0 connection. You can refer the same document under
+[Setting PPP connections](https://amanyantrr.github.io/testmkdocs5/)
+
+
+![index](img/eth.png)
+
+
+- Then you have to assign gateway IP address of your PC client as 192.168.1.150 for direct communication between client and VIBE.
+- For this you have to type
+
+         # nano /etc/network/interfaces
+
+- A text editor will get open and then you have to configure the settings as per your requirements.( gateway IP address must be  by default. ( we are using 192.168.1.151 for our PC client)
+
+         # wpa-ssid "essid"
+         # wpa-psk  "password"
+
+         case, to completely disable remove file [run_boot-scripts] from the b$
+         iface usb0 inet static# Ethernet/RNDIS gadget (g_ether)
+         # ... or on host side, usbnet and random hwaddr
+         # Note on some boards, usb0 is automatically setup with an init script
+         # in that# This file describes the network interfaces available on your system
+         # and how to activate them. For more information, see interfaces(5).
+
+         # The loopback network interface
+         auto lo
+         iface lo inet loopback
+
+         # The primary network interface
+         auto eth0
+         # iface eth0 inet dhcp
+         # Example to keep MAC address between reboots
+         # hwaddress ether DE:AD:BE:EF:CA:FE
+         iface eth0 inet static
+         address 192.168.1.151
+         netmask 255.255.255.0
+         network 192.168.1.0
+         gateway 192.168.1.150
+
+- Now for confirmation, ping 192.168.1.150 using your PC client as well as ping 192.168.1.151( PC client) using VIBE.
+- Log into VIBE via ethernet port using your PC client as root client.
